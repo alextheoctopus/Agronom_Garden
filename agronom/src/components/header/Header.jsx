@@ -1,7 +1,8 @@
-import { Button } from '@mui/material';
-const Header = () => {
+import { Stack, Typography, Button } from "@mui/material";
+
+const Header = (props) => {
     return (<>
-        <Button onClick={setPopUpWindow(!popupWindow)}>Добавить</Button>
+        <Button onClick={() => props.setPopupWindow(!props.popupWindow)}>Добавить</Button>
     </>);
 }
 

@@ -1,10 +1,11 @@
-import { useContext } from "react";
-import { AppContext } from "../AppContext";
+import PopupWindow from "./PopupWindow";
 
-const Body = () => {
-    const {popupWindow}=useContext(AppContext);
+const Body = (props) => {
+    if(props.popupWindow) {
+        console.log("PopupWindow");
+    }
     return (<>
-    {popupWindow? <PopUpWindow></PopUpWindow>}
+        {props.popupWindow ? <PopupWindow></PopupWindow> : ''}
     </>);
 }
 
