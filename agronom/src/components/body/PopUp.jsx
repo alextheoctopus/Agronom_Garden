@@ -5,7 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useState } from "react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { overlay, popup, fieldStyle } from "../../styles/AdditionalStyles";
+import { overlay, popup, fieldStyle,inputField } from "../../styles/AdditionalStyles";
 import { useDispatch } from "react-redux";
 import { addPerson } from "../../store/features/persons";
 const theme = createTheme();
@@ -104,10 +104,7 @@ const PopupWindow = (props) => {
                                         value={formData.name}
                                         onChange={handleInputChange}
                                         onKeyDown={handleKeyPress}
-                                        sx={{
-                                            marginBottom: "48px", height: "52px", width: "502px", transform: 'none',
-                                            boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.16)"
-                                        }} disableUnderline={true}></Input>
+                                        sx={inputField} disableUnderline={true}>sjnissn</Input>
                                     {errors.name && <Typography sx={{ color: 'red' }}>This field is required.</Typography>}
                                     <Input
                                         type="text"
@@ -115,10 +112,7 @@ const PopupWindow = (props) => {
                                         onKeyDown={handleKeyPress}
                                         value={formData.company}
                                         onChange={handleInputChange}
-                                        sx={{
-                                            border: 'none', marginBottom: "48px", height: "52px", width: "502px", transform: 'none',
-                                            boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.16)"
-                                        }} disableUnderline={true}></Input>
+                                        sx={inputField} disableUnderline={true}></Input>
                                     {errors.company && <Typography sx={{ color: 'red' }}>This field is required.</Typography>}
                                     <Box sx={{ width: 502, marginBottom: "48px", height: "52px" }}>
                                         <FormControl fullWidth>
@@ -130,11 +124,10 @@ const PopupWindow = (props) => {
                                                     transform: 'none', // Remove the default transform
                                                     position: 'absolute', // Adjust position
                                                     top: '50%', // Center vertically
-                                                    transform: 'translateY(-50%)', // Center vertically
+                                                    transform: 'translateY(-40%)', // Center vertically
                                                     color: '#000000',
                                                     marginLeft: "31px",
                                                     fontWeight: "400",
-                                                    paddingTop: '0', paddingBottom: '0'
                                                 }}
                                             >
                                                 Выбрать
