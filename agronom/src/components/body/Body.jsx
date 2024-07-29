@@ -1,11 +1,12 @@
-import PopupWindow from "./PopupWindow";
-
+import PopupWindow from "./PopUp";
+import ListOfPersons from "./ListOfPersons";
 const Body = (props) => {
-    if(props.popupWindow) {
+    if (props.popupWindow) {
         console.log("PopupWindow");
     }
     return (<>
-        {props.popupWindow ? <PopupWindow></PopupWindow> : ''}
+        {props.popupWindow ? <PopupWindow setPopupWindow={props.setPopupWindow}></PopupWindow> : ''}
+        <ListOfPersons></ListOfPersons>
     </>);
 }
 

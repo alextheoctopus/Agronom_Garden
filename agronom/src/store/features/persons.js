@@ -1,13 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 export const persons = createSlice({
     name: "persons",
     initialState: {
         personData: {
             name: '',
-            last_name: '',
-            patronymic: '',
-            attendance: false,
+            presence: false,
             company: '',
             group: '',
         },
@@ -19,24 +17,30 @@ export const persons = createSlice({
         addPerson: (state, action) => {
             if (action.payload) {
                 state.personData['name'] = action.payload.name;
-                state.personData['attendance'] = action.payload.attendance;
+                console.log(action.payload.presence);
+                state.personData['presence'] = action.payload.presence;
                 state.personData['company'] = action.payload.company;
-                state.personData['group'] = action.payload.group;
-                state.personsList.push(state.personData);
-                persons.caseReducers.updateAttendance(state);
+                action.payload.group === 'partner' ?
+                    state.personData['group'] = "Партнёр" :
+                    action.payload.group === 'client' ?
+                        state.personData['group'] = "Клиент" :
+                        state.personData['group'] = "Прохожий"
+                state.personsList.push(current(state.personData));
+                console.log(JSON.stringify(state.personsList), 'persons');
+                persons.caseReducers.updatepresence(state);
             }
         },
-        updatePerson: (state, action) => {//передаётся index, ['name','attendance'],name:'', attendance:'', company:'', group:'',
+        updatePerson: (state, action) => {//передаётся index, ['name','presence'],name:'', presence:'', company:'', group:'',
             action.payload.case.forEach((field) => {
                 switch (field) {
                     case 'name': {
                         state.personData['name'] = action.payload.name;
                         break;
                     }
-                    case 'attendance': {
-                        if (state.personData['attendance'] != action.payload.attendance) {
-                            state.personData['attendance'] = action.payload.attendance;
-                            persons.caseReducers.updateAttendance(state);
+                    case 'presence': {
+                        if (state.personData['presence'] != action.payload.presence) {
+                            state.personData['presence'] = action.payload.presence;
+                            persons.caseReducers.updatepresence(state);
                         }
                         break;
                     }
@@ -55,8 +59,8 @@ export const persons = createSlice({
         deletePerson: (state, action) => {
             state.personsList.splice(action.payload.index - 1, 1);
         },
-        updateAttendance: (state) => {
-            if (state.personData['attendance']) {
+        updatepresence: (state) => {
+            if (state.personData['presence']) {
                 state.activePersons++;
                 state.nonActivePersons--;
             } else {
@@ -67,7 +71,7 @@ export const persons = createSlice({
         activeCount: (state) => {
             //вызывать единожды при начальной отрисовке страницы
             state.personsList.forEach((person) => {
-                person.attendance === true ? state.activePersons++ : ''
+                if (person.presence === true) state.activePersons++
             });
             state.nonActivePersons = state.personsList.length - state.activePersons;
         }
