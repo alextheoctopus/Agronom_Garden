@@ -9,7 +9,6 @@ const Body = (props) => {
         {props.popupWindow ? <PopupWindow popupWindow={props.popupWindow} setPopupWindow={props.setPopupWindow}></PopupWindow> : ''}
         <ListOfPersons sort={sort} valueCompany={props.valueCompany} valueName={props.valueName} setPopupWindow={props.setPopupWindow}></ListOfPersons>
         <SortComponent sort={sort} setSort={setSort}></SortComponent>
-        
     </>);
 }
 

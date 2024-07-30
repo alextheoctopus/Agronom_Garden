@@ -14,8 +14,8 @@ const Header = (props) => {
     return (
         <Stack direction="row">
             <Logo></Logo>
-            <Input sx={{ ...style, left: '270px' }} onChange={inputNameHandler} placeholder="Поиск по имени"></Input>
-            <Input sx={{ ...style, left: '679px' }} onChange={inputCompanyHandler} placeholder="Поиск по компании"></Input>
+            <Input sx={{ ...style, left: '270px' }} onChange={inputNameHandler} placeholder="Поиск по имени" disableUnderline={true}></Input>
+            <Input sx={{ ...style, left: '679px' }} onChange={inputCompanyHandler} placeholder="Поиск по компании" disableUnderline={true}></Input>
             <Button sx={{
                 ...buttonStyle,
                 backgroundColor: "#4CAF50",
@@ -31,7 +31,7 @@ const Header = (props) => {
                     color: '#4e3000'
                 }}>Посетители</Typography>
 
-                <Grid container columnSpacing={{ sm: 3 }} sx={{ position: "absolute", top: "74px", left: "1880px" }}>
+                <Grid container maxWidth={100} columnSpacing={{ sm: 3 }} sx={{ position: "absolute", top: "74px", left: "1880px" }}>
                     <Grid item>
                         <Typography sx={{
                             position: 'absolute',

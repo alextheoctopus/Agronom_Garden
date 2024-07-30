@@ -29,7 +29,7 @@ const ListOfPersons = (props) => {
             }}>
             </Box>
             <Box>
-                <Stack direction={"column"} marginTop={"31px"} justifyContent="stretch" alignItems="stretch" sx={{ position: 'absolute', left: '53px', top: '180px' }}>
+                <Stack direction={"column"} marginTop={"31px"} justifyContent="stretch" alignItems="stretch" sx={{ position: 'absolute', left: '53px', top: '180px', overflow:'auto' }}>
                     {(props.valueName || props.valueCompany) ?
                         persons.personsList.map((pers, index) =>
                             regexName.test(pers.name) && regexCompany.test(pers.company) && (props.sort === pers.presence || props.sort === 'none') ?

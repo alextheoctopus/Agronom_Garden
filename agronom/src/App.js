@@ -12,7 +12,7 @@ function AppRedux() {
   const [valueCompany, setValueCompany] = useState('');
   
   return (
-    <div className="App" style={{ width: "2048px", height: "1536px" }}>
+    <div className="App" style={{ width: "2048px", height: "1536px"}}>
       <Header valueName={valueName} valueCompany={valueCompany} setValueName={setValueName} setValueCompany={setValueCompany} popupWindow={popupWindow} setPopupWindow={setPopupWindow} ></Header>
       <Body valueName={valueName} valueCompany={valueCompany} popupWindow={popupWindow} setPopupWindow={setPopupWindow}></Body>
     </div>
