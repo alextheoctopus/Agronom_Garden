@@ -3,6 +3,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 export const persons = createSlice({
     name: "persons",
     initialState: {
+        editingPersonIndex: '',
         personData: {
             name: '',
             presence: false,
@@ -20,46 +21,54 @@ export const persons = createSlice({
                 console.log(action.payload.presence);
                 state.personData['presence'] = action.payload.presence;
                 state.personData['company'] = action.payload.company;
-                action.payload.group === 'partner' ?
-                    state.personData['group'] = "Партнёр" :
-                    action.payload.group === 'client' ?
-                        state.personData['group'] = "Клиент" :
-                        state.personData['group'] = "Прохожий"
+                state.personData['group'] = action.payload.group
                 state.personsList.push(current(state.personData));
                 console.log(JSON.stringify(state.personsList), 'persons');
-                persons.caseReducers.updatepresence(state);
+                persons.caseReducers.updatePresence(state);
             }
         },
+        getEditingPersonIndex: (state, action) => {
+            state.editingPersonIndex = action.payload;
+        },
         updatePerson: (state, action) => {//передаётся index, ['name','presence'],name:'', presence:'', company:'', group:'',
-            action.payload.case.forEach((field) => {
-                switch (field) {
-                    case 'name': {
-                        state.personData['name'] = action.payload.name;
-                        break;
-                    }
-                    case 'presence': {
-                        if (state.personData['presence'] != action.payload.presence) {
-                            state.personData['presence'] = action.payload.presence;
-                            persons.caseReducers.updatepresence(state);
-                        }
-                        break;
-                    }
-                    case 'company': {
-                        state.personData['company'] = action.payload.company;
-                        break;
-                    }
-                    case 'group': {
-                        state.personData['group'] = action.payload.group;
-                        break;
-                    }
-                }
-            })
-            state.personsList[action.payload.index - 1] = state.personData;
+            state.personData['name'] = action.payload.name;
+            if (state.personData['presence'] != action.payload.presence) {
+                state.personData['presence'] = action.payload.presence;
+                persons.caseReducers.updatePresence(state);
+            }
+            state.personData['company'] = action.payload.company;
+            state.personData['group'] = action.payload.group;
+            state.personsList[action.payload.index] = state.personData;
+
+            // action.payload.case.forEach((field) => {
+            //     switch (field) {
+            //         case 'name': {
+            //             state.personData['name'] = action.payload.name;
+            //             break;
+            //         }
+            //         case 'presence': {
+            //             if (state.personData['presence'] != action.payload.presence) {
+            //                 state.personData['presence'] = action.payload.presence;
+            //                 persons.caseReducers.updatePresence(state);
+            //             }
+            //             break;
+            //         }
+            //         case 'company': {
+            //             state.personData['company'] = action.payload.company;
+            //             break;
+            //         }
+            //         case 'group': {
+            //             state.personData['group'] = action.payload.group;
+            //             break;
+            //         }
+            //     }
+            // })
+            // state.personsList[action.payload.index] = state.personData;
         },
         deletePerson: (state, action) => {
             state.personsList.splice(action.payload.index - 1, 1);
         },
-        updatepresence: (state) => {
+        updatePresence: (state) => {
             if (state.personData['presence']) {
                 state.activePersons++;
                 state.nonActivePersons--;
@@ -77,5 +86,5 @@ export const persons = createSlice({
         }
     }
 });
-export const { addPerson, updatePerson, deletePerson } = persons.actions;
+export const { addPerson, updatePerson, deletePerson, getEditingPersonIndex } = persons.actions;
 export default persons.reducer;
