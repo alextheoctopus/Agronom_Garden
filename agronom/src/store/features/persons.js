@@ -6,7 +6,7 @@ export const persons = createSlice({
         editingPersonIndex: '',
         personData: {
             name: '',
-            presence: false,
+            presence: '',
             company: '',
             group: '',
         },
@@ -18,73 +18,49 @@ export const persons = createSlice({
         addPerson: (state, action) => {
             if (action.payload) {
                 state.personData['name'] = action.payload.name;
-                console.log(action.payload.presence);
                 state.personData['presence'] = action.payload.presence;
                 state.personData['company'] = action.payload.company;
                 state.personData['group'] = action.payload.group
                 state.personsList.push(current(state.personData));
-                console.log(JSON.stringify(state.personsList), 'persons');
-                persons.caseReducers.updatePresence(state);
             }
         },
         getEditingPersonIndex: (state, action) => {
             state.editingPersonIndex = action.payload;
         },
-        updatePerson: (state, action) => {//передаётся index, ['name','presence'],name:'', presence:'', company:'', group:'',
+        updatePerson: (state, action) => {
             state.personData['name'] = action.payload.name;
             if (state.personData['presence'] != action.payload.presence) {
+                if (action.payload.presence) {
+                    state.activePersons++;
+                    state.nonActivePersons--;
+                } else {
+                    state.activePersons--;
+                    state.nonActivePersons++;
+                }
                 state.personData['presence'] = action.payload.presence;
-                persons.caseReducers.updatePresence(state);
             }
             state.personData['company'] = action.payload.company;
             state.personData['group'] = action.payload.group;
             state.personsList[action.payload.index] = state.personData;
-
-            // action.payload.case.forEach((field) => {
-            //     switch (field) {
-            //         case 'name': {
-            //             state.personData['name'] = action.payload.name;
-            //             break;
-            //         }
-            //         case 'presence': {
-            //             if (state.personData['presence'] != action.payload.presence) {
-            //                 state.personData['presence'] = action.payload.presence;
-            //                 persons.caseReducers.updatePresence(state);
-            //             }
-            //             break;
-            //         }
-            //         case 'company': {
-            //             state.personData['company'] = action.payload.company;
-            //             break;
-            //         }
-            //         case 'group': {
-            //             state.personData['group'] = action.payload.group;
-            //             break;
-            //         }
-            //     }
-            // })
-            // state.personsList[action.payload.index] = state.personData;
         },
         deletePerson: (state, action) => {
-            state.personsList.splice(action.payload.index - 1, 1);
-        },
-        updatePresence: (state) => {
-            if (state.personData['presence']) {
-                state.activePersons++;
-                state.nonActivePersons--;
-            } else {
-                state.activePersons--;
-                state.nonActivePersons++;
-            }
+            state.personsList.splice(action.payload.index, 1);
+            persons.caseReducers.activeCount(state);
         },
         activeCount: (state) => {
-            //вызывать единожды при начальной отрисовке страницы
+            let active = 0;
+            let nonActive = 0;
             state.personsList.forEach((person) => {
-                if (person.presence === true) state.activePersons++
+                if (person.presence === true) { active++ }
+                else {
+                    nonActive++;
+                }
             });
-            state.nonActivePersons = state.personsList.length - state.activePersons;
+            state.activePersons = active;
+            state.nonActivePersons = nonActive;
+
         }
     }
 });
-export const { addPerson, updatePerson, deletePerson, getEditingPersonIndex } = persons.actions;
+export const { addPerson, updatePerson, deletePerson, getEditingPersonIndex, activeCount } = persons.actions;
 export default persons.reducer;

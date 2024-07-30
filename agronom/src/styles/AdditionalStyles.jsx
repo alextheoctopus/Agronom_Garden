@@ -15,9 +15,28 @@ export const indicator = {
     position: 'absolute', top: 0, left: '1833px', height: '59px', width: '59px', borderRadius: '50%'
 }
 
+export const buttonStyle = {
+    boxShadow: "0 3px 3px 0 rgba(0, 0, 0, 0.16)",
+    width: "273px",
+    height: "52px",
+    fontFamily: 'Roboto',
+    fontWeight: 400,
+    fontSize: "24px",
+    color:"white",
+    textTransform: 'none',
+    '&:hover': {
+        backgroundColor: '#3E8C41', // Darker shade on hover
+    },
+    '&:active': {
+        backgroundColor: '#245526', // Darker shade on click
+    },
+}
+
 export const inputField = {
     marginBottom: "48px", height: "52px", width: "502px", transform: 'none',
-    boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.16)"
+    boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.16)", fontSize: 30,
+    fontFamily: "OpenSans, sans-serif", fontWeight: 400,
+    paddingLeft:"10px",
 }
 
 export const nameOfFields = {

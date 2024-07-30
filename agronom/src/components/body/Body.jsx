@@ -1,51 +1,15 @@
 import PopupWindow from "./PopUp";
 import ListOfPersons from "./ListOfPersons";
-import { Typography, Stack, Button } from "@mui/material";
+import SortComponent from "./SortComponent";
+import { useState } from "react";
 const Body = (props) => {
-    console.log("PopupWindow", props.popupWindow);
+    const [sort, setSort] = useState('none');
 
     return (<>
         {props.popupWindow ? <PopupWindow popupWindow={props.popupWindow} setPopupWindow={props.setPopupWindow}></PopupWindow> : ''}
-        <ListOfPersons valueCompany={props.valueCompany} valueName={props.valueName} setPopupWindow={props.setPopupWindow}></ListOfPersons>
-        <Stack direction="row">
-            <Typography>Фильтровать по</Typography>
-            <Button sx={{
-                position: 'absolute',
-                left: "390px",
-                top: "1445px",
-                backgroundColor:'transparent',
-                '&:hover': {
-                    backgroundColor: '#3E8C41', // Darker shade on hover
-                },
-                '&:active': {
-                    backgroundColor: '#245526', // Darker shade on click
-                }
-            }}>Отсутствующим</Button>
-            <Button sx={{
-                position: 'absolute',
-                left: "390px",
-                top: "1445px",
-                backgroundColor:'transparent',
-                '&:hover': {
-                    backgroundColor: '#3E8C41', // Darker shade on hover
-                },
-                '&:active': {
-                    backgroundColor: '#245526', // Darker shade on click
-                }
-            }}>Присутствующим</Button>
-            <Button sx={{
-                position: 'absolute',
-                left: "390px",
-                top: "1445px",
-                backgroundColor:'transparent',
-                '&:hover': {
-                    backgroundColor: '#3E8C41', // Darker shade on hover
-                },
-                '&:active': {
-                    backgroundColor: '#245526', // Darker shade on click
-                }
-            }}>Без фильтра</Button>
-        </Stack>
+        <ListOfPersons sort={sort} valueCompany={props.valueCompany} valueName={props.valueName} setPopupWindow={props.setPopupWindow}></ListOfPersons>
+        <SortComponent sort={sort} setSort={setSort}></SortComponent>
+        
     </>);
 }
 
